@@ -28,6 +28,7 @@ import com.sourcey.materiallogindemo.keywords.feature.Login
 import com.sourcey.materiallogindemo.keywords.feature.ManageProfileInfo
 import com.sourcey.materiallogindemo.keywords.feature.Register
 import com.sourcey.materiallogindemo.utils.verifyToast
+import com.sourcey.materiallogindemo.utils.verifyToast2
 import com.sourcey.materiallogindemo.utils.waitForElementToAppear
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
@@ -119,6 +120,7 @@ class RegisterTestSuite {
         Register.inputUserInfo(name, address, email, "09999", password, confirmPassword)
         onView(withId(R.id.input_mobile)).check(matches(hasErrorText("Enter Valid Mobile Number")))
         verifyToast("Login failed", activityRule)
+        verifyToast2("Login failed", activityRule.activity)
     }
 
     @Test
