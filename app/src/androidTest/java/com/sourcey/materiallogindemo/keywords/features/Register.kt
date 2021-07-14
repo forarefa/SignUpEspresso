@@ -1,13 +1,11 @@
 package com.sourcey.materiallogindemo.keywords.features
 
 import com.sourcey.materiallogindemo.keywords.screens.LoginScreen
-import com.sourcey.materiallogindemo.keywords.screens.ProfileScreen
 import com.sourcey.materiallogindemo.keywords.screens.RegisterScreen
 
 object Register {
     private val loginScreen by lazy { LoginScreen() }
     private val registerScreen by lazy { RegisterScreen() }
-    private val profileScreen by lazy { ProfileScreen() }
 
     fun gotoRegisterScreen() {
         loginScreen.iClickBtnRegister()
@@ -15,40 +13,40 @@ object Register {
     }
 
     fun enterRegisterInfoAndSignUp(name: String, address: String, email: String, mobile: String, password: String, confirmPassword: String) {
-        registerScreen.iEnterName(name)
-        registerScreen.iEnterAddress(address)
-        registerScreen.iEnterEmail(email)
-        registerScreen.iEnterMobileNumber(mobile)
-        registerScreen.iEnterPassword(password)
-        registerScreen.iEnterConfirmPassword(confirmPassword)
-        registerScreen.iClickBtnSignUp()
+        registerScreen.apply {
+            iEnterName(name)
+            iEnterAddress(address)
+            iEnterEmail(email)
+            iEnterMobileNumber(mobile)
+            iEnterPassword(password)
+            iEnterConfirmPassword(confirmPassword)
+            iClickBtnSignUp()
+        }
     }
 
-    fun enterRegisterInfoAndSignUpV2(registerData:Map<String, String>) {
-        registerScreen.iEnterName(registerData.getValue("name"))
-        registerScreen.iEnterAddress(registerData.getValue("address"))
-        registerScreen.iEnterEmail(registerData.getValue("email"))
-        registerScreen.iEnterMobileNumber(registerData.getValue("mobile"))
-        registerScreen.iEnterPassword(registerData.getValue("password"))
-        registerScreen.iEnterConfirmPassword(registerData.getValue("confirmPassword"))
-        registerScreen.iClickBtnSignUp()
-    }
-
-    fun verifyRegisterSuccess() {
-        profileScreen.iVerifyProfileScreen()
-        profileScreen.iClickBtnLogOut()
+    fun enterRegisterInfoAndSignUpV2(registerData: Map<String, String>) {
+        registerScreen.apply{
+            iEnterName(registerData.getValue("name"))
+            iEnterAddress(registerData.getValue("address"))
+            iEnterEmail(registerData.getValue("email"))
+            iEnterMobileNumber(registerData.getValue("mobile"))
+            iEnterPassword(registerData.getValue("password"))
+            iEnterConfirmPassword(registerData.getValue("confirmPassword"))
+            iClickBtnSignUp()
+        }
     }
 
     fun gotoRegisterScreenAndRegisterSuccess(name: String, address: String, email: String, mobile: String, password: String, confirmPassword: String) {
         gotoRegisterScreen()
         enterRegisterInfoAndSignUp(name, address, email, mobile, password, confirmPassword)
-        verifyRegisterSuccess()
+        ManageProfileInfo.verifyProfileInfo(name, address, email, mobile)
     }
 
-    fun gotoRegisterScreenAndRegisterSuccessV2(registerData:Map<String, String>) {
+    fun gotoRegisterScreenAndRegisterSuccessV2(userInfo: Map<String, String>) {
         gotoRegisterScreen()
-        enterRegisterInfoAndSignUpV2(registerData)
-        verifyRegisterSuccess()
+        enterRegisterInfoAndSignUpV2(userInfo)
+        ManageProfileInfo.verifyProfileInfo(
+                userInfo.getValue("name"), userInfo.getValue("address"), userInfo.getValue("email"), userInfo.getValue("mobile"))
     }
 
     fun verifyNameError(errorMessage: String?) {

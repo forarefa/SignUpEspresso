@@ -3,7 +3,9 @@ package com.sourcey.materiallogindemo.testcases
 import androidx.test.rule.ActivityTestRule
 import com.sourcey.materiallogindemo.MainActivity
 import com.sourcey.materiallogindemo.keywords.features.Login
+import com.sourcey.materiallogindemo.keywords.features.ManageProfileInfo
 import com.sourcey.materiallogindemo.keywords.features.Register
+import com.sourcey.materiallogindemo.utils.SmokeTest
 import org.junit.Rule
 import org.junit.Test
 
@@ -48,16 +50,20 @@ class LoginTestSuite {
         Login.verifyLoginFailedErrorMessage(null, "enter a valid email address or password")
     }
 
+    @SmokeTest
     @Test
     fun TC2007_LoginSuccess() {
-        Register.gotoRegisterScreenAndRegisterSuccess(
-                "Workshop Espresso",
-                "East Building",
-                "email@email.com",
-                "0884808890",
-                "a112233",
-                "a112233")
-        Login.enterInformationAndLogin("email@email.com", "a112233")
-        Login.verifyLogInSuccess()
+        val userInfo = hashMapOf(
+                "name" to "Workshop Espresso",
+                "address" to "East Building",
+                "email" to "email@email.com",
+                "mobile" to "0888808890",
+                "password" to "a112233",
+                "confirmPassword" to "a112233"
+        )
+        Register.gotoRegisterScreenAndRegisterSuccessV2(userInfo)
+        ManageProfileInfo.logout()
+        Login.enterInformationAndLogin(userInfo.getValue("email"), userInfo.getValue("password"))
+        Login.verifyLogInSuccess(userInfo.getValue("email"))
     }
 }

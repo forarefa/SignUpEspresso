@@ -20,8 +20,8 @@ object Login {
         loginScreen.iVerifyToastErrorMessage()
     }
 
-    fun verifyLogInSuccess() {
-        profileScreen.iVerifyProfileScreen()
+    fun verifyLogInSuccess(email: String) {
+        profileScreen.iVerifyEmail(email)
     }
 
     fun enterInformationAndLoginWithHint(email: String, password: String) {
